@@ -14,15 +14,15 @@ async function getAddressFromCEP(cep: string) {
     logradouro: string;
     complemento: string;
     bairro: string;
-    localidade: string;
+    cidade: string;
     uf: string;
   }
 
-  const addressResult = {
+  const addressResult: Address = {
     logradouro: result.data.logradouro,
     complemento: result.data.complemento,
     bairro: result.data.bairro,
-    localidade: result.data.localidade,
+    cidade: result.data.localidade,
     uf: result.data.uf
   }
 
