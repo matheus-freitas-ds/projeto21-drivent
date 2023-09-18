@@ -8,7 +8,7 @@ async function getAddressFromCEP(cep: string) {
 
   const result = await request.get(`${process.env.VIA_CEP_API}/${cep}/json/`);
 
-  if (result.data.erro) throw invalidDataError('Nonexistent CEP');
+  if (result.data.erro || result.status === 400) throw invalidDataError('Nonexistent CEP');
 
   interface Address {
     logradouro: string;
