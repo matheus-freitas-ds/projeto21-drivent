@@ -58,7 +58,8 @@ async function createOrUpdateEnrollmentWithAddress(params: CreateOrUpdateEnrollm
   enrollment.birthday = new Date(enrollment.birthday);
   const address = getAddressForUpsert(params.address);
 
-  // TODO - Verificar se o CEP é válido antes de associar ao enrollment.
+  const result = await request.get(`${process.env.VIA_CEP_API}/${address.cep}/json/`);
+  if (result.data.erro) throw invalidDataError('Nonexistent CEP');
 
   const newEnrollment = await enrollmentRepository.upsert(params.userId, enrollment, exclude(enrollment, 'userId'));
 
