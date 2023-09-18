@@ -59,7 +59,7 @@ async function createOrUpdateEnrollmentWithAddress(params: CreateOrUpdateEnrollm
   const address = getAddressForUpsert(params.address);
 
   const result = await request.get(`${process.env.VIA_CEP_API}/${address.cep}/json/`);
-  if (result.data.erro) throw invalidDataError('Nonexistent CEP');
+  if (result.data.erro || result.status === 400) throw invalidDataError('Nonexistent CEP');
 
   const newEnrollment = await enrollmentRepository.upsert(params.userId, enrollment, exclude(enrollment, 'userId'));
 
